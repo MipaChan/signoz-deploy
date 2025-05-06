@@ -18,7 +18,23 @@
             <host>zookeeper-3</host>
             <port>2181</port>
         </node>
+        <!-- 增加会话超时和连接超时设置 -->
+        <session_timeout_ms>30000</session_timeout_ms>
+        <operation_timeout_ms>10000</operation_timeout_ms>
+        <connection_timeout_ms>5000</connection_timeout_ms>
+        <!-- 重试策略 -->
+        <retry_num>5</retry_num>
+        <retry_sleep_ms>1000</retry_sleep_ms>
     </zookeeper>
+
+    <!-- DDL配置 -->
+    <distributed_ddl>
+        <path>/clickhouse/task_queue/ddl</path>
+        <task_max_lifetime>3600</task_max_lifetime>
+        <cleanup_delay_period>60</cleanup_delay_period>
+        <task_max_lifetime>3600</task_max_lifetime>
+        <max_tasks_in_queue>1000</max_tasks_in_queue>
+    </distributed_ddl>
 
     <!-- Configuration of clusters that could be used in Distributed tables.
          https://clickhouse.com/docs/en/operations/table_engines/distributed/
