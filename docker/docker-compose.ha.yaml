@@ -208,7 +208,7 @@ services:
       - STORAGE=clickhouse
       - GODEBUG=netdns=go
       - TELEMETRY_ENABLED=${TELEMETRY_ENABLED}
-      - DEPLOYMENT_TYPE=docker-ha-${ENVIRONMENT}
+      - DEPLOYMENT_TYPE=docker-standalone-amd
       - LOG_LEVEL=${LOG_LEVEL}
       - DEBUG=${DEBUG}
     healthcheck:
