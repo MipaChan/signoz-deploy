@@ -100,7 +100,7 @@ services:
       - zookeeper-1:/bitnami/zookeeper
     environment:
       - ZOO_SERVER_ID=1
-      - ZOO_SERVERS=0.0.0.0:2888:3888,zookeeper-2:2888:3888,zookeeper-3:2888:3888
+      - ZOO_SERVERS=zookeeper-1:2888:3888,zookeeper-2:2888:3888,zookeeper-3:2888:3888
       - ALLOW_ANONYMOUS_LOGIN=yes
       - ZOO_AUTOPURGE_INTERVAL=1
       - ZOO_ENABLE_PROMETHEUS_METRICS=yes
@@ -114,7 +114,7 @@ services:
       - zookeeper-2:/bitnami/zookeeper
     environment:
       - ZOO_SERVER_ID=2
-      - ZOO_SERVERS=zookeeper-1:2888:3888,0.0.0.0:2888:3888,zookeeper-3:2888:3888
+      - ZOO_SERVERS=zookeeper-1:2888:3888,zookeeper-2:2888:3888,zookeeper-3:2888:3888
       - ALLOW_ANONYMOUS_LOGIN=yes
       - ZOO_AUTOPURGE_INTERVAL=1
       - ZOO_ENABLE_PROMETHEUS_METRICS=yes
@@ -128,7 +128,7 @@ services:
       - zookeeper-3:/bitnami/zookeeper
     environment:
       - ZOO_SERVER_ID=3
-      - ZOO_SERVERS=zookeeper-1:2888:3888,zookeeper-2:2888:3888,0.0.0.0:2888:3888
+      - ZOO_SERVERS=zookeeper-1:2888:3888,zookeeper-2:2888:3888,zookeeper-3:2888:3888
       - ALLOW_ANONYMOUS_LOGIN=yes
       - ZOO_AUTOPURGE_INTERVAL=1
       - ZOO_ENABLE_PROMETHEUS_METRICS=yes
