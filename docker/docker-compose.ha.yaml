@@ -8,7 +8,7 @@ x-common: &common
       max-size: 50m
       max-file: "10"
 x-clickhouse-defaults: &clickhouse-defaults
-  !!merge <<: *common
+  <<: *common
   image: clickhouse/clickhouse-server:24.1.2-alpine
   tty: true
   labels:
@@ -42,7 +42,7 @@ x-clickhouse-defaults: &clickhouse-defaults
 
 # ZooKeeper default configuration
 x-zookeeper-defaults: &zookeeper-defaults
-  !!merge <<: *common
+  <<: *common
   image: bitnami/zookeeper:3.7.1
   user: root
   labels:
@@ -59,7 +59,7 @@ x-zookeeper-defaults: &zookeeper-defaults
 
 # Database dependency configuration
 x-db-depend: &db-depend
-  !!merge <<: *common
+  <<: *common
   depends_on:
     clickhouse:
       condition: service_healthy
@@ -70,7 +70,7 @@ x-db-depend: &db-depend
 services:
   # Initialize ClickHouse
   init-clickhouse:
-    !!merge <<: *common
+    <<: *common
     image: clickhouse/clickhouse-server:24.1.2-alpine
     container_name: signoz-init-clickhouse
     command:
@@ -91,7 +91,7 @@ services:
 
   # ZooKeeper service 1
   zookeeper-1:
-    !!merge <<: *zookeeper-defaults
+    <<: *zookeeper-defaults
     container_name: signoz-zookeeper-1
     # ports:
     #   - "2181:2181"
@@ -107,7 +107,7 @@ services:
       - ZOO_ENABLE_PROMETHEUS_METRICS=yes
       - ZOO_PROMETHEUS_METRICS_PORT_NUMBER=9141
   zookeeper-2:
-    !!merge <<: *zookeeper-defaults
+    <<: *zookeeper-defaults
     container_name: signoz-zookeeper-2
     # ports:
     #   - "2182:2181"
@@ -123,7 +123,7 @@ services:
       - ZOO_ENABLE_PROMETHEUS_METRICS=yes
       - ZOO_PROMETHEUS_METRICS_PORT_NUMBER=9141
   zookeeper-3:
-    !!merge <<: *zookeeper-defaults
+    <<: *zookeeper-defaults
     container_name: signoz-zookeeper-3
     # ports:
     #   - "2183:2181"
@@ -141,7 +141,7 @@ services:
 
   # ClickHouse service 1
   clickhouse:
-    !!merge <<: *clickhouse-defaults
+    <<: *clickhouse-defaults
     container_name: signoz-clickhouse
     # ports:
     #   - "9000:9000"
@@ -158,7 +158,7 @@ services:
   
   # ClickHouse service 2
   clickhouse-2:
-    !!merge <<: *clickhouse-defaults
+    <<: *clickhouse-defaults
     container_name: signoz-clickhouse-2
     # ports:
     #   - "9001:9000"
@@ -173,7 +173,7 @@ services:
       - clickhouse-2:/var/lib/clickhouse/
       # - ../common/clickhouse/storage.xml:/etc/clickhouse-server/config.d/storage.xml
   clickhouse-3:
-    !!merge <<: *clickhouse-defaults
+    <<: *clickhouse-defaults
     container_name: signoz-clickhouse-3
     # ports:
     #   - "9002:9000"
@@ -188,7 +188,7 @@ services:
       - clickhouse-3:/var/lib/clickhouse/
       # - ../common/clickhouse/storage.xml:/etc/clickhouse-server/config.d/storage.xml
   signoz:
-    !!merge <<: *db-depend
+    <<: *db-depend
     image: signoz/signoz:${VERSION:-v0.81.0}
     container_name: signoz
     command:
@@ -223,7 +223,7 @@ services:
       retries: 3
   # OpenTelemetry Collector - External Facing
   otel-collector:
-    !!merge <<: *db-depend
+    <<: *db-depend
     image: signoz/signoz-otel-collector:${OTELCOL_TAG:-v0.111.40}
     container_name: signoz-otel-collector
     command:
@@ -247,8 +247,9 @@ services:
         condition: service_completed_successfully
       signoz:
         condition: service_healthy
-  # Schema migrator in sync mode  schema-migrator-sync:
-    !!merge <<: *common
+  # Schema migrator in sync mode
+  schema-migrator-sync:
+    <<: *common
     image: signoz/signoz-schema-migrator:${OTELCOL_TAG:-v0.111.40}
     container_name: schema-migrator-sync
     command:
@@ -260,7 +261,7 @@ services:
         condition: service_healthy
     restart: on-failure
   schema-migrator-async:
-    !!merge <<: *db-depend
+    <<: *db-depend
     image: signoz/signoz-schema-migrator:${OTELCOL_TAG:-v0.111.40}
     container_name: schema-migrator-async
     command:
