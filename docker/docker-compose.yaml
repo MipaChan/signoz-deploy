@@ -11,7 +11,7 @@ x-common: &common
 
 # ClickHouse default configuration
 x-clickhouse-defaults: &clickhouse-defaults
-  !!merge <<: *common
+  <<: *common
   image: clickhouse/clickhouse-server:24.1.2-alpine
   tty: true
   labels:
@@ -41,7 +41,7 @@ x-clickhouse-defaults: &clickhouse-defaults
 
 # ZooKeeper default configuration
 x-zookeeper-defaults: &zookeeper-defaults
-  !!merge <<: *common
+  <<: *common
   image: bitnami/zookeeper:3.7.1
   user: root
   labels:
@@ -58,7 +58,7 @@ x-zookeeper-defaults: &zookeeper-defaults
 
 # Database dependency configuration
 x-db-depend: &db-depend
-  !!merge <<: *common
+  <<: *common
   depends_on:
     clickhouse:
       condition: service_healthy
@@ -69,7 +69,7 @@ x-db-depend: &db-depend
 services:
   # Initialize ClickHouse
   init-clickhouse:
-    !!merge <<: *common
+    <<: *common
     image: clickhouse/clickhouse-server:24.1.2-alpine
     container_name: signoz-init-clickhouse
     command:
@@ -90,7 +90,7 @@ services:
 
   # ZooKeeper service
   zookeeper-1:
-    !!merge <<: *zookeeper-defaults
+    <<: *zookeeper-defaults
     container_name: signoz-zookeeper-1
     volumes:
       - zookeeper-1:/bitnami/zookeeper
@@ -103,7 +103,7 @@ services:
 
   # ClickHouse service
   clickhouse:
-    !!merge <<: *clickhouse-defaults
+    <<: *clickhouse-defaults
     container_name: signoz-clickhouse
     volumes:
       - ../common/clickhouse/config.xml:/etc/clickhouse-server/config.xml
@@ -115,7 +115,7 @@ services:
 
   # SigNoz Frontend service
   signoz:
-    !!merge <<: *db-depend
+    <<: *db-depend
     image: signoz/signoz:${VERSION:-v0.81.0}
     container_name: signoz
     command:
@@ -150,7 +150,7 @@ services:
 
   # OpenTelemetry Collector - External Facing
   otel-collector:
-    !!merge <<: *db-depend
+    <<: *db-depend
     image: signoz/signoz-otel-collector:${OTELCOL_TAG:-v0.111.40}
     container_name: signoz-otel-collector
     command:
@@ -173,7 +173,7 @@ services:
 
   # Schema migrator in sync mode
   schema-migrator-sync:
-    !!merge <<: *common
+    <<: *common
     image: signoz/signoz-schema-migrator:${OTELCOL_TAG:-v0.111.40}
     container_name: schema-migrator-sync
     command:
@@ -187,7 +187,7 @@ services:
 
   # Schema migrator in async mode
   schema-migrator-async:
-    !!merge <<: *db-depend
+    <<: *db-depend
     image: signoz/signoz-schema-migrator:${OTELCOL_TAG:-v0.111.40}
     container_name: schema-migrator-async
     command:
