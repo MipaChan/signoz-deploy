@@ -18,13 +18,8 @@
             <host>zookeeper-3</host>
             <port>2181</port>
         </node>
-        <!-- 增加会话超时和连接超时设置 -->
         <session_timeout_ms>30000</session_timeout_ms>
         <operation_timeout_ms>10000</operation_timeout_ms>
-        <connection_timeout_ms>5000</connection_timeout_ms>
-        <!-- 重试策略 -->
-        <retry_num>5</retry_num>
-        <retry_sleep_ms>1000</retry_sleep_ms>
     </zookeeper>
 
     <!-- DDL配置 -->
