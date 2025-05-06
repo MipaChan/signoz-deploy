@@ -1,0 +1,33 @@
+<!--
+  ClickHouse Custom Function Configuration File
+  This file defines executable custom functions
+-->
+<functions>
+    <function>
+        <!-- Function type: executable -->
+        <type>executable</type>
+        <!-- Function name -->
+        <name>histogramQuantile</name>
+        <!-- Return type -->
+        <return_type>Float64</return_type>
+        <!-- First parameter: bucket boundaries array -->
+        <argument>
+            <type>Array(Float64)</type>
+            <name>buckets</name>
+        </argument>
+        <!-- Second parameter: count array -->
+        <argument>
+            <type>Array(Float64)</type>
+            <name>counts</name>
+        </argument>
+        <!-- Third parameter: quantile -->
+        <argument>
+            <type>Float64</type>
+            <name>quantile</name>
+        </argument>
+        <!-- Input/output format -->
+        <format>CSV</format>
+        <!-- Execution command -->
+        <command>./histogramQuantile</command>
+    </function>
+</functions>

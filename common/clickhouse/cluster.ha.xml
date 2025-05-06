@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+  ClickHouse High Availability Cluster Configuration File
+  This file defines ZooKeeper and remote server configurations for high availability deployment
+-->
+<clickhouse>
+    <!-- ZooKeeper configuration, used to store metadata about replicas
+         High availability deployment requires multiple ZooKeeper nodes
+    -->
+    <zookeeper>
+        <node index="1">
+            <host>zookeeper-1</host>
+            <port>2181</port>
+        </node>
+        <node index="2">
+            <host>zookeeper-2</host>
+            <port>2181</port>
+        </node>
+    </zookeeper>
+
+    <!-- Cluster configuration that can be used in distributed tables
+         https://clickhouse.com/docs/en/operations/table_engines/distributed/
+    -->
+    <remote_servers>
+        <cluster>
+            <!-- Inter-cluster key for distributed queries
+                 Default: no key (no authentication is performed)
+            -->
+            <!-- <secret></secret> -->
+            <shard>
+                <!-- Optional. Whether to write data to only one of the replicas. Default: false (write data to all replicas) -->
+                <!-- <internal_replication>false</internal_replication> -->
+                <!-- Optional. Shard weight when writing data. Default: 1 -->
+                <!-- <weight>1</weight> -->
+                <replica>
+                    <host>clickhouse</host>
+                    <port>9000</port>
+                    <!-- Optional. Replica priority for load balancing. Default: 1 (lower value means higher priority) -->
+                    <!-- <priority>1</priority> -->
+                </replica>
+            </shard>
+            <shard>
+                <replica>
+                    <host>clickhouse-2</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </cluster>
+    </remote_servers>
+</clickhouse>

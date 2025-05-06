@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+  ClickHouse User Configuration File
+  This file defines users, permissions, quotas, and setting profiles
+-->
+<clickhouse>
+    <!-- Setting profiles -->
+    <profiles>
+        <!-- Default settings -->
+        <default>
+            <!-- Maximum memory usage for a single query (bytes) -->
+            <max_memory_usage>10000000000</max_memory_usage>
+
+            <!-- How to select replicas during distributed query processing
+                 random - randomly select from replicas with the least number of errors
+                 nearest_hostname - select the replica with the least difference from the local hostname from the set with the least number of errors
+                 in_order - select the first active replica in the specified order
+                 first_or_random - if the first replica has a high error count, randomly select from replicas with the least number of errors
+            -->
+            <load_balancing>random</load_balancing>
+        </default>
+
+        <!-- Profile that only allows read queries -->
+        <readonly>
+            <readonly>1</readonly>
+        </readonly>
+    </profiles>
+
+    <!-- Users and access control lists -->
+    <users>
+        <!-- If username is not specified, 'default' user is used -->
+        <default>
+            <!-- Password can be specified in plaintext (not recommended) or using SHA256 (in hex format)
+                 If you want to specify a password in plaintext, place it in the 'password' element
+                 If you want to specify SHA256, place it in the 'password_sha256_hex' element
+                 If you want to specify double SHA1, place it in the 'password_double_sha1_hex' element
+            -->
+            <password></password>
+
+            <!-- List of networks with open access
+                 To open access from anywhere, specify: <ip>::/0</ip>
+                 To open access only from localhost, specify:
+                    <ip>::1</ip>
+                    <ip>127.0.0.1</ip>
+            -->
+            <networks>
+                <ip>::/0</ip>
+            </networks>
+
+            <!-- Setting profile for the user -->
+            <profile>default</profile>
+
+            <!-- Quota for the user -->
+            <quota>default</quota>
+
+            <!-- User can create other users and grant permissions -->
+            <!-- <access_management>1</access_management> -->
+        </default>
+    </users>
+
+    <!-- Quotas -->
+    <quotas>
+        <!-- Quota name -->
+        <default>
+            <!-- Limits for time intervals. Different limits can be specified for different intervals -->
+            <interval>
+                <!-- Interval length (seconds) -->
+                <duration>3600</duration>
+
+                <!-- No limits. Only calculate resource usage within the time interval -->
+                <queries>0</queries>
+                <errors>0</errors>
+                <result_rows>0</result_rows>
+                <read_rows>0</read_rows>
+                <execution_time>0</execution_time>
+            </interval>
+        </default>
+    </quotas>
+</clickhouse>

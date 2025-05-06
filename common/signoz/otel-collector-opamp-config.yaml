@@ -1,0 +1,4 @@
+# OpenTelemetry Collector OpAMP Configuration
+# This configuration is used to connect to the OpAMP endpoint of the SigNoz service
+
+server_endpoint: ws://signoz:4320/v1/opamp
