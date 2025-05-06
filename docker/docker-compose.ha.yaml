@@ -25,6 +25,8 @@ x-clickhouse-defaults: &clickhouse-defaults
       condition: service_healthy
     zookeeper-2:
       condition: service_healthy
+    zookeeper-3:
+      condition: service_healthy
   healthcheck:
     test:
       - CMD
@@ -209,6 +211,7 @@ services:
     environment:
       - OTEL_RESOURCE_ATTRIBUTES=host.name=signoz-host,os.type=linux
       - LOW_CARDINAL_EXCEPTION_GROUPING=false
+      - ZK_HOST=zookeeper-1:2181
     expose:
       - "4317" # OTLP gRPC receiver
       - "4318" # OTLP HTTP receiver
@@ -231,6 +234,8 @@ services:
       - --up=
     depends_on:
       clickhouse:
+        condition: service_healthy
+      clickhouse-2:
         condition: service_healthy
     restart: on-failure
 
