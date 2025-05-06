@@ -16,6 +16,10 @@
             <host>zookeeper-2</host>
             <port>2181</port>
         </node>
+        <node index="3">
+            <host>zookeeper-3</host>
+            <port>2181</port>
+        </node>
     </zookeeper>
 
     <!-- Cluster configuration that can be used in distributed tables
