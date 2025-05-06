@@ -203,12 +203,7 @@
     <max_connections>4096</max_connections>
 
     <!-- For 'Connection: keep-alive' in HTTP 1.1 -->
-    <keep_alive_timeout>30</keep_alive_timeout>
-    
-    <!-- TCP keep-alive settings -->
-    <tcp_keep_alive_timeout>300</tcp_keep_alive_timeout>
-    <tcp_keep_alive_count>3</tcp_keep_alive_count>
-    <tcp_keep_alive_interval>60</tcp_keep_alive_interval>
+    <keep_alive_timeout>3</keep_alive_timeout>
 
     <!-- gRPC protocol (see src/Server/grpc_protos/clickhouse_grpc.proto for the API) -->
     <!-- <grpc_port>9100</grpc_port> -->
