@@ -10,8 +10,11 @@ receivers:
         endpoint: 0.0.0.0:4318
         cors:
           allowed_origins:
-            -  https://*.link
             -  https://*.ai
+            -  https://*.*.ai
+            -  https://*.link
+            -  https://*.*.link
+            -  https://*.*.*.link
           allowed_methods:
             - POST
             - OPTIONS
