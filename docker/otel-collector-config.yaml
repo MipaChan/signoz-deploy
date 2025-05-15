@@ -9,8 +9,7 @@ receivers:
       http:
         endpoint: 0.0.0.0:4318
         cors:
-          allowed_origins: ["http://*","https://*"]
-          allowed_headers:
+          allowed_origins:
             - "*"
 processors:
   batch:
