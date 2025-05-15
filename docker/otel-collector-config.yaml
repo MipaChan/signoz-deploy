@@ -12,6 +12,11 @@ receivers:
           allowed_origins:
             -  https://*.link
             -  https://*.ai
+          allowed_methods:
+            - POST
+            - OPTIONS
+          allowed_headers:
+            - "*"
 processors:
   batch:
     # Batch processing configuration
