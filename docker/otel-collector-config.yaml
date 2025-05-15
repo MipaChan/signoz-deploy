@@ -10,8 +10,8 @@ receivers:
         endpoint: 0.0.0.0:4318
         cors:
           allowed_origins:
-            - *.ai
-            - *.link
+            -  https://*.link
+            -  https://*.ai
 processors:
   batch:
     # Batch processing configuration
